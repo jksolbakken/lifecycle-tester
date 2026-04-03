@@ -1,0 +1,41 @@
+name: Publish Package to npmjs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: "read"
+      id-token: "write" # For npm "trusted publishing"
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # ratchet:step-security/harden-runner@v2
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            release-assets.githubusercontent.com:443
+            github.com:443
+            registry.npmjs.org:443
+            fulcio.sigstore.dev:443
+            rekor.sigstore.dev:443
+            nodejs.org:443
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # ratchet:actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # ratchet:actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish --provenance

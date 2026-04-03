@@ -1,0 +1,5 @@
+tests
+.github/
+.tool-versions/
+mise.toml
+*.md
