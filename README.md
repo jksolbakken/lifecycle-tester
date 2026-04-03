@@ -8,7 +8,5 @@ If the scripts are run, they will exit with a non-zero exit code and display an 
 
 ## Usage
 
-```
-follow http://tinyurl.com/m3q2xt
-```
+Install this package as any other, i.e. `npm install lifecycle-tester` or `bun add lifecycle-tester`
 
