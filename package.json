@@ -1,6 +1,6 @@
 {
   "name": "lifecycle-tester",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Contains benign pre and postinstall scripts to enable safe testing of lifecycle script settings in Node, Bun and Deno",
   "main": "main.js",
   "scripts": {
